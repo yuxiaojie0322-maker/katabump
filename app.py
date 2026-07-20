@@ -646,7 +646,7 @@ def main():
     
     # 解析 JSON 账号数据
     try:
-        accounts = json.loads(ACCOUNTS_JSON)
+        accounts = json.loads(ACCOUNTS_JSON.strip())
         if not accounts:
             print("❌ 未获取到账号列表，请检查 KATABUMP_ACCOUNTS 环境变量配置。")
             return
