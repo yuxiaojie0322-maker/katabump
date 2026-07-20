@@ -681,7 +681,7 @@ def main():
             print(f"{'='*40}")
             
             # 【关键】清理上一个账号的会话状态
-            sb.clear_cookies()
+            sb.delete_all_cookies()
             try:
                 sb.execute_script("window.localStorage.clear(); window.sessionStorage.clear();")
             except Exception:
