@@ -682,6 +682,10 @@ def main():
             
             # 【关键】清理上一个账号的会话状态
             sb.clear_cookies()
+            try:
+                sb.execute_script("window.localStorage.clear(); window.sessionStorage.clear();")
+            except Exception:
+                pass
             
             if login(sb, email, password):
                 renew_server(sb, email)
