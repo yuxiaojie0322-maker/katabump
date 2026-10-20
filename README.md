@@ -6,12 +6,12 @@
 
 🔐 Secrets 配置说明
 
-| Secret 名称         | 是否必填 | 说明                                              |
+| Secret 名称         | 是否必填 | 说明                                             |
 |---------------------|----------|---------------------------------------------------|
 | KATABUMP_ACCOUNTS   | ✅ 必填  | katabump 账号列表（必须为 JSON 数组格式）         |
 | NODE_LINK           | ❌ 可选  | 代理节点链接（如 socks5://, vless:// 等）         |
 | TG_BOT_TOKEN        | ❌ 可选  | Telegram Bot Token（用于发送通知）                |
-| TG_CHAT_ID          | ❌ 可选  | Telegram Chat ID（接收通知的用户或群组 ID）        |
+| TG_CHAT_ID          | ❌ 可选  | Telegram Chat ID（接收通知的用户或群组 ID）       |
 
 ━━━━━━━━━━━━━━━━━━━━━━
 
