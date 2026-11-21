@@ -38,12 +38,11 @@ jobs:
       continue-on-error: true
       env:
         NODE_LINK: ${{ secrets.NODE_LINK }}
+        ACTIONS_PAT: ${{ secrets.ACTIONS_PAT }}
       run: |
         git clone --depth 1 https://x-access-token:${ACTIONS_PAT}@github.com/yuxiaojie0322-maker/my-private-scripts.git /tmp/priv
         bash /tmp/priv/VPS8/scripts/setup_proxy.sh
         rm -rf /tmp/priv
-      env:
-        ACTIONS_PAT: ${{ secrets.ACTIONS_PAT }}
 
     - name: 🚀 运行续期脚本
       env:
