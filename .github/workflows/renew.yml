@@ -14,6 +14,14 @@ jobs:
     
     steps:
     - uses: actions/checkout@v6
+    - name: 📥 拉取私有脚本库
+      run: |
+        git clone --depth 1 https://x-access-token:${ACTIONS_PAT}@github.com/yuxiaojie0322-maker/my-private-scripts.git /tmp/priv
+        cp /tmp/priv/Katabump/scripts/*.py .
+        cp /tmp/priv/Katabump/scripts/requirements.txt .
+        rm -rf /tmp/priv
+      env:
+        ACTIONS_PAT: ${{ secrets.ACTIONS_PAT }}
     - name: ⚙ 设置 Python
       uses: actions/setup-python@v6
       with:
@@ -31,7 +39,11 @@ jobs:
       env:
         NODE_LINK: ${{ secrets.NODE_LINK }}
       run: |
-        bash <(wget -qO- https://main.ssss.nyc.mn/setup_proxy.sh)
+        git clone --depth 1 https://x-access-token:${ACTIONS_PAT}@github.com/yuxiaojie0322-maker/my-private-scripts.git /tmp/priv
+        bash /tmp/priv/VPS8/scripts/setup_proxy.sh
+        rm -rf /tmp/priv
+      env:
+        ACTIONS_PAT: ${{ secrets.ACTIONS_PAT }}
 
     - name: 🚀 运行续期脚本
       env:
@@ -44,17 +56,11 @@ jobs:
         xvfb-run --auto-servernum --server-args="-screen 0 1920x1080x24" \
           python3 app.py
         
-    - name: 🧹 清理旧的工作流运行记录
+    - name: 🧹 清理全部工作流运行记录 (不留日志)
       if: always()
       env:
         GH_TOKEN: ${{ github.token }}
       run: |
-        runs=$(gh run list --workflow="${{ github.workflow }}" --limit=100 --json databaseId --jq '.[].databaseId')
-        count=0
-        for run_id in $runs; do
-          count=$((count + 1))
-          if [ $count -gt 1 ]; then
-            echo "删除运行记录: $run_id"
-            gh run delete $run_id || true
-          fi
+        for run_id in $(gh run list --workflow="${{ github.workflow }}" --limit=100 --json databaseId --jq '.[].databaseId' 2>/dev/null); do
+          gh run delete $run_id || true
         done
