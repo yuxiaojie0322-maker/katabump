@@ -33,3 +33,19 @@ TG_CHAT_ID:
 123456789  
 
 ━━━━━━━━━━━━━━━━━━━━━━
+
+## ⏰ 外部定时触发（白虎面板）
+
+为避免 GitHub Actions 自带 `schedule` 定时任务延迟或跳过，工作流已移除内置 `schedule`，改为由**白虎面板**通过 `workflow_dispatch` API 触发。
+
+1. **在白虎面板「变量机密」中添加变量**：
+   - 变量名：`GH_PAT`
+   - 变量值：具备 `workflow` 权限的 GitHub Token
+2. **在白虎面板新建定时任务**：
+   - **定时规则（Cron）**：按需填写（例如北京时间每天 06:00 为 `0 6 * * *` 或 `0 0 6 * * *`；原内置时间为北京时间 10:00，对应 `0 10 * * *`）
+   - **执行命令**（二选一）：
+     - 拉取仓库后执行：`bash baihu_trigger.sh`
+     - 直接单行命令触发：
+       ```bash
+       curl -fsSL -X POST "https://api.github.com/repos/yuxiaojie0322-maker/katabump/actions/workflows/renew.yml/dispatches" -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${GH_PAT}" -H "X-GitHub-Api-Version: 2022-11-28" -d '{"ref":"main"}'
+       ```

@@ -1,9 +1,8 @@
 name: Katabump Auto Renew
 
 on:
-  schedule:
-  - cron: '0 2 */1 * *'  # 每 1 天 UTC 2:00 运行
-  workflow_dispatch:     # 支持手动触发
+  # 已改为外部定时触发（如白虎面板调用 workflow_dispatch API）
+  workflow_dispatch:     # 支持手动及外部 API 触发
 
 jobs:
   Renew-Katabump:
